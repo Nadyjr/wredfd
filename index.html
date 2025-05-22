@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jurnal Tutor RBM Algebra</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <style>
+    html, body {
+      height: auto;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e0e5ec;
+      padding: 30px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: #e0e5ec;
+      padding: 30px;
+      border-radius: 40px;
+      box-shadow: 10px 10px 30px #bebebe, -10px -10px 30px #ffffff;
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-header h2 {
+      margin: 0;
+      color: #333;
+    }
+    .form-section {
+      background: #e0e5ec;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      box-shadow: 5px 5px 12px #90cdf4, -5px -5px 12px #ebf8ff;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    input, select, textarea {
+      width: 96%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: block;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      background: #e0e5ec;
+      box-shadow: inset 3px 3px 6px #c5c5c5, inset -3px -3px 6px #fff;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      width: auto;
+      min-width: 180px;
+      padding: 12px 30px;
+      font-size: 15px;
+      font-weight: 600;
+      display: block;
+      margin: 0 auto;
+      color: #fff;
+      background: linear-gradient(135deg, #005eff, #005eff);
+      border: none;
+      border-radius: 999px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #003366, #002244);
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .choices__item--choice {
+      transition: background 0.3s, transform 0.2s;
+      border-radius: 12px;
+      padding: 10px 15px;
+    }
+    .choices__item--choice:hover,
+    .choices__item--choice:focus {
+      background: rgba(100, 150, 255, 0.2);
+      transform: scale(1.02);
+      cursor: pointer;
+    }
+    .choices__inner {
+      display: flex;
+      align-items: center;
+      height: 46px;
+      font-size: 16px;
+      border-radius: 20px !important;
+      background: #e0e5ec !important;
+      box-shadow: inset 3px 3px 6px #c5c5c5, inset -3px -3px 6px #fff !important;
+      border: none !important;
+    }
+    .choices[data-type*="select-one"] {
+      position: relative;
+    }
+    .choices[data-type*="select-one"]::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #666;
+      pointer-events: none;
+    }
+    .choices__input--cloned {
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='gray' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 2a8 8 0 015.292 13.708l4.5 4.5-1.414 1.414-4.5-4.5A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 10px center;
+      background-size: 16px;
+      padding-left: 32px !important;
+    }
+    .check-box {
+      display: block;
+      text-align: center;
+      background: #e0e5ec;
+      padding: 12px 30px;
+      border-radius: 999px;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #218838;
+      text-decoration: none;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 5px 5px 12px #bebebe, -5px -5px 12px #ffffff;
+    }
+    .check-box a {
+      text-decoration: none;
+      color: #218838;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .form-container {
+        padding: 15px;
+        border-radius: 20px;
+        box-shadow: none;
+      }
+      input, select, textarea, button {
+        width: 100% !important;
+        font-size: 15px;
+        padding: 12px 16px;
+      }
+      .form-header h2 {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      button {
+        font-size: 15px;
+        padding: 12px;
+        margin-top: 18px;
+      }
+      .check-box {
+        font-size: 14px;
+        padding: 10px 16px;
+        margin-top: 20px;
+      }
+
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .form-container {
+        padding: 15px;
+        border-radius: 20px;
+        box-shadow: none;
+      }
+
+      input, select, textarea, button {
+        width: 100% !important;
+        font-size: 15px;
+        padding: 12px 16px;
+      }
+
+      .form-header h2 {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 12px;
+        margin-top: 18px;
+      }
+
+      .check-box {
+        font-size: 14px;
+        padding: 10px 16px;
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Jurnal Harian Tutor RBM Algebra - Mei 2025</h2>
+    </div>
+    <form id="laporanForm">
+      <div class="form-section">
+        <label>Nama Siswa</label>
+        <select name="nama_siswa" id="namaSiswaSelect" required>
+          <option value="">-- Masukan nama siswa --</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label>Mata Pelajaran</label>
+        <select name="mata_pelajaran" id="mataPelajaranSelect" required>
+          <option value="">-- Pilih mata pelajaran --</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label>Hari</label>
+        <select name="hari" required>
+          <option value="">-- Les Pada Hari --</option>
+          <option>Senin</option>
+          <option>Selasa</option>
+          <option>Rabu</option>
+          <option>Kamis</option>
+          <option>Jumat</option>
+          <option>Sabtu</option>
+          <option>Minggu</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label>Tanggal</label>
+        <input type="date" name="tanggal" required />
+      </div>
+
+      <div class="form-section">
+        <label>Waktu (DARI JAM BERAPA SAMPAI JAM BERAPA)</label>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <input type="time" name="waktu_dari_jam" required style="flex: 1;" />
+          <input type="time" name="waktu_sampai_jam" required style="flex: 1;" />
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label>Materi</label>
+        <input type="text" name="materi" required />
+      </div>
+
+      <div class="form-section">
+        <label>Laporan Perkembangan</label>
+        <textarea name="laporan_perkembangan" rows="3" required></textarea>
+      </div>
+
+      <div class="form-section">
+        <label>Nama Tutor</label>
+        <select name="nama_tutor" id="namaTutorSelect" required>
+          <option value="">-- Masukan nama --</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label>Fee</label>
+        <input type="number" name="fee" required />
+      </div>
+
+      <div class="form-section">
+        <label>PIC</label>
+        <input type="text" name="pic" required />
+      </div>
+
+      <div class="form-section">
+        <label>Admin</label>
+        <input type="text" name="admin" required />
+      </div>
+
+      <button type="submit" id="submitBtn">Kirim Laporan</button>
+      <div class="check-box">
+        <a href="cek-data.html" target="_blank">Cek data yang telah dimasukkan</a>
+      </div>
+    </form>
+  </div>
+
+  <script src="nama-siswa.js"></script>
+  <script src="nama-tutor.js"></script>
+  <script src="mata-pelajaran.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Choices('#namaSiswaSelect', { searchEnabled: true, itemSelectText: '' });
+      new Choices('#namaTutorSelect', { searchEnabled: true, itemSelectText: '' });
+      new Choices('#mataPelajaranSelect', { searchEnabled: true, itemSelectText: '' });
+    });
+
+    document.getElementById('laporanForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form));
+
+      const dari = form.waktu_dari_jam.value;
+      const sampai = form.waktu_sampai_jam.value;
+      if (sampai <= dari) {
+        alert("Jam selesai harus lebih besar dari jam mulai.");
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = "Mengirim...";
+
+      fetch('https://script.google.com/macros/s/AKfycbwNuOrdyWNjY20m2yeQN4fl0I6kI3jehAlkPJG69HfIaBe9RE4rqUmGhbQlBYkOAYDd/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(res => res.text())
+        .then(response => {
+          alert('Laporan berhasil dikirim!');
+          form.reset();
+        })
+        .catch(err => alert('Terjadi kesalahan: ' + err.message))
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = "Kirim Laporan";
+        });
+    });
+  </script>
+</body>
+</html>

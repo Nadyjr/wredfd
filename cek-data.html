@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cek Data Laporan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #218838;
+      color: white;
+      position: sticky;
+      top: 0;
+    }
+
+    @media (max-width: 600px) {
+      table {
+        border: 0;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: #fff;
+        padding: 10px;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #555;
+        width: 45%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Data Laporan RBM Algebra</h2>
+  <table id="dataTable">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1smJ6c9jTrc5D0WxVownoH_3RENc66flFCOlB3jbYisQ/edit?gid=0#gid=0';
+
+    fetch(sheetUrl)
+      .then(res => res.json())
+      .then(data => {
+        const thead = document.querySelector('#dataTable thead');
+        const tbody = document.querySelector('#dataTable tbody');
+
+        if (data.length > 0) {
+          const headers = Object.keys(data[0]);
+          const headRow = document.createElement('tr');
+          headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header.replace(/_/g, ' ').toUpperCase();
+            headRow.appendChild(th);
+          });
+          thead.appendChild(headRow);
+
+          data.forEach(row => {
+            const tr = document.createElement('tr');
+            headers.forEach(header => {
+              const td = document.createElement('td');
+              td.textContent = row[header];
+              td.setAttribute("data-label", header.replace(/_/g, ' ').toUpperCase());
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = "<tr><td colspan='100%'>Tidak ada data.</td></tr>";
+        }
+      })
+      .catch(err => {
+        alert("Gagal mengambil data: " + err.message);
+      });
+  </script>
+</body>
+</html>
